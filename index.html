@@ -16,6 +16,16 @@
             --text-main: #ffffff;
             --text-muted: #7f91a4;
             --danger-color: #e53935;
+            --header-bg: #17212b;
+        }
+
+        body.light-theme {
+            --bg-color: #f4f4f5;
+            --surface-color: #ffffff;
+            --surface-light: #e0e0e0;
+            --text-main: #000000;
+            --text-muted: #707579;
+            --header-bg: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -27,254 +37,83 @@
             overflow: hidden; 
             display: flex; 
             flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* --- ЭКРАН АВТОРИЗАЦИИ --- */
-        #auth-screen { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            padding: 24px; 
-            background: linear-gradient(135deg, #0e1621 0%, #17212b 100%);
-        }
-
-        .auth-box { 
-            width: 100%; 
-            max-width: 380px; 
-            text-align: center;
-        }
-
-        .logo { 
-            font-size: 36px; 
-            font-weight: 600; 
-            color: var(--text-main); 
-            margin-bottom: 8px; 
-            letter-spacing: -0.5px;
-        }
-
+        #auth-screen { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 24px; }
+        .auth-box { width: 100%; max-width: 380px; text-align: center; }
+        .logo { font-size: 36px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
         .logo span { color: var(--primary-color); }
-
-        .subtitle { 
-            color: var(--text-muted); 
-            font-size: 14px; 
-            margin-bottom: 40px; 
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        input { 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 12px; 
-            border: 1px solid var(--surface-light); 
-            background-color: var(--surface-color); 
-            color: var(--text-main); 
-            font-size: 16px; 
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
+        .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 40px; }
+        .input-group { margin-bottom: 16px; }
+        input { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid var(--surface-light); background-color: var(--surface-color); color: var(--text-main); font-size: 16px; outline: none; transition: border-color 0.2s; }
         input:focus { border-color: var(--primary-color); }
         input::placeholder { color: var(--text-muted); }
-
-        .btn { 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 12px; 
-            border: none; 
-            font-size: 16px; 
-            font-weight: 500; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-        }
-
-        .btn-primary { 
-            background-color: var(--primary-color); 
-            color: white; 
-            margin-top: 10px;
-        }
-        
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background-color: var(--primary-color); color: white; margin-top: 10px; }
         .btn-primary:active { opacity: 0.8; transform: scale(0.98); }
-
-        .btn-secondary { 
-            background-color: transparent; 
-            color: var(--primary-color); 
-            margin-top: 16px;
-        }
-
-        .error { 
-            color: var(--danger-color); 
-            margin-top: 16px; 
-            font-size: 14px; 
-            background: rgba(229, 57, 53, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-        }
+        .btn-secondary { background-color: transparent; color: var(--primary-color); margin-top: 16px; }
+        .error { color: var(--danger-color); margin-top: 16px; font-size: 14px; background: rgba(229, 57, 53, 0.1); padding: 10px; border-radius: 8px; display: none; }
 
         /* --- ГЛАВНЫЙ ЭКРАН --- */
         #main-screen { display: none; flex-direction: column; height: 100vh; }
-
-        .header { 
-            background-color: var(--surface-color); 
-            padding: 16px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid var(--bg-color);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .header-title { 
-            font-size: 22px; 
-            font-weight: 600; 
-            color: var(--text-main); 
-        }
-
+        .header { background-color: var(--header-bg); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-light); position: sticky; top: 0; z-index: 10; }
+        .header-title { font-size: 22px; font-weight: 600; }
         .header-icons { display: flex; gap: 24px; color: var(--text-muted); font-size: 20px; }
-        .header-icons i { cursor: pointer; transition: color 0.2s; }
-        .header-icons i:active { color: var(--primary-color); }
-
-        .content { flex: 1; overflow-y: auto; padding: 16px; padding-bottom: 80px; }
+        .content { flex: 1; overflow-y: auto; padding: 16px; padding-bottom: 90px; }
 
         /* --- ЧАТЫ --- */
-        .chat-list { display: flex; flex-direction: column; gap: 8px; }
-        
-        .empty-state { 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 60vh;
-            color: var(--text-muted); 
-            text-align: center;
-            gap: 12px;
-        }
-
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--text-muted); text-align: center; gap: 12px; }
         .empty-state i { font-size: 48px; opacity: 0.5; }
 
-        .chat-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 12px; 
-            border-radius: 14px; 
-            background-color: var(--surface-color); 
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .chat-item:active { background-color: var(--surface-light); }
-
-        .chat-avatar { 
-            width: 56px; 
-            height: 56px; 
-            border-radius: 50%; 
-            background: linear-gradient(135deg, var(--primary-color), #3a6ea5); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 22px; 
-            font-weight: 600; 
-            color: #fff; 
-            margin-right: 16px; 
-            flex-shrink: 0;
-        }
-
-        .chat-info { flex: 1; overflow: hidden; }
-        .chat-name { font-weight: 600; font-size: 16px; margin-bottom: 4px; }
-        .chat-last-msg { color: var(--text-muted); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* --- НАСТРОЙКИ --- */
-        .settings-group {
-            background-color: var(--surface-color);
-            border-radius: 14px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .settings-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 16px; 
-            border-bottom: 1px solid var(--bg-color); 
-        }
+        /* --- НАСТРОЙКИ И ПРОФИЛЬ --- */
+        .section-title { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 10px 10px; letter-spacing: 0.5px; font-weight: 600; }
+        .settings-group { background-color: var(--surface-color); border-radius: 14px; overflow: hidden; margin-bottom: 10px; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--bg-color); }
         .settings-item:last-child { border-bottom: none; }
-
         .settings-left { display: flex; align-items: center; gap: 16px; }
-        .settings-icon { 
-            width: 32px; 
-            height: 32px; 
-            border-radius: 8px; 
-            background-color: var(--surface-light); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            color: var(--primary-color);
-            font-size: 16px;
-        }
-
+        .settings-icon { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-light); display: flex; justify-content: center; align-items: center; color: var(--primary-color); font-size: 16px; }
         .settings-label { font-size: 16px; }
-        .settings-value { color: var(--text-muted); font-size: 15px; }
-        .settings-value.highlight { color: var(--primary-color); font-weight: 600; }
+        .settings-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; }
+        
+        /* Переключатель */
+        .toggle { position: relative; width: 50px; height: 28px; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--surface-light); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4cd964; }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        /* --- НИЖНЕЕ МЕНЮ --- */
-        .bottom-nav { 
-            background-color: var(--surface-color); 
-            display: flex; 
-            padding: 12px 0; 
-            border-top: 1px solid var(--bg-color);
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+        /* Тема и цвет */
+        .theme-selector { display: flex; gap: 8px; }
+        .theme-btn { padding: 8px 12px; border-radius: 8px; background: var(--surface-light); border: none; color: var(--text-main); font-size: 14px; cursor: pointer; }
+        .theme-btn.active { background: var(--primary-color); color: white; }
+        .color-picker { display: flex; gap: 12px; padding: 16px; }
+        .color-circle { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+        .color-circle.active { border-color: white; transform: scale(1.1); }
 
-        .nav-item { 
-            flex: 1; 
-            text-align: center; 
-            color: var(--text-muted); 
-            font-size: 12px; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-        }
+        /* Профиль */
+        .profile-header { display: flex; flex-direction: column; align-items: center; padding: 20px 0 30px 0; }
+        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), #3a6ea5); display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: 600; color: #fff; margin-bottom: 16px; }
+        .profile-name { font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .verified-badge { color: #3897f0; font-size: 18px; }
+        .profile-status { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
 
-        .nav-item i { 
-            font-size: 22px; 
-            margin-bottom: 6px; 
-            display: block; 
-            transition: transform 0.2s;
-        }
-
+        /* Нижнее меню */
+        .bottom-nav { background-color: var(--header-bg); display: flex; padding: 10px 0; border-top: 1px solid var(--surface-light); position: fixed; bottom: 0; width: 100%; }
+        .nav-item { flex: 1; text-align: center; color: var(--text-muted); font-size: 12px; cursor: pointer; transition: all 0.2s; }
+        .nav-item i { font-size: 22px; margin-bottom: 6px; display: block; transition: transform 0.2s; }
         .nav-item.active { color: var(--primary-color); }
         .nav-item.active i { transform: translateY(-2px); }
 
-        /* --- КНОПКА ДЕЙСТВИЯ --- */
-        .fab { 
-            position: fixed; 
-            bottom: 80px; 
-            right: 20px; 
-            width: 56px; 
-            height: 56px; 
-            border-radius: 50%; 
-            background-color: var(--primary-color); 
-            color: white; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 22px; 
-            box-shadow: 0 4px 12px rgba(82, 136, 193, 0.4); 
-            cursor: pointer; 
-            transition: transform 0.2s;
-            z-index: 20;
-        }
-
+        /* Кнопка действия */
+        .fab { position: fixed; bottom: 85px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 22px; box-shadow: 0 4px 12px rgba(82, 136, 193, 0.4); cursor: pointer; transition: transform 0.2s; z-index: 20; }
         .fab:active { transform: scale(0.9); }
+
+        /* Меню создания */
+        #create-menu { display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: flex-end; flex-direction: column; }
+        .create-menu-content { background: var(--surface-color); border-radius: 20px 20px 0 0; padding: 20px; }
     </style>
 </head>
 <body>
@@ -283,7 +122,7 @@
     <div id="auth-screen">
         <div class="auth-box">
             <div class="logo">zenn<span>X</span></div>
-            <div class="subtitle">Добро пожаловать в новый мессенджер</div>
+            <div class="subtitle">Добро пожаловать</div>
             
             <div class="input-group">
                 <input type="email" id="email" placeholder="Электронная почта">
@@ -302,7 +141,7 @@
     <!-- ГЛАВНЫЙ ЭКРАН -->
     <div id="main-screen">
         <div class="header">
-            <div class="header-title">zennX</div>
+            <div class="header-title" id="header-title">Чаты</div>
             <div class="header-icons">
                 <i class="fas fa-search"></i>
                 <i class="fas fa-ellipsis-v"></i>
@@ -314,52 +153,82 @@
             <div id="tab-chats">
                 <div class="empty-state" id="empty-chats">
                     <i class="far fa-comments"></i>
-                    <div>У вас пока нет чатов.<br>Начните общение первым!</div>
+                    <div>Пока нет чатов. Нажмите <i class="fas fa-pen"></i> и выберите собеседника.</div>
                 </div>
-                <div class="chat-list" id="chat-list"></div>
             </div>
 
             <!-- ВКЛАДКА НАСТРОЙКИ -->
             <div id="tab-settings" style="display: none;">
+                <div class="section-title">Внешний вид</div>
                 <div class="settings-group">
                     <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon"><i class="fas fa-id-badge"></i></div>
-                            <span class="settings-label">Мой ID</span>
+                        <span class="settings-label">Тема</span>
+                        <div class="theme-selector">
+                            <button class="theme-btn active" onclick="setTheme('dark')">Тёмная</button>
+                            <button class="theme-btn" onclick="setTheme('light')">Светлая</button>
                         </div>
-                        <span class="settings-value highlight" id="my-id">Загрузка...</span>
                     </div>
-                    <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon"><i class="fas fa-user"></i></div>
-                            <span class="settings-label">Имя пользователя</span>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item" style="flex-direction: column; align-items: flex-start;">
+                        <span class="settings-label" style="margin-bottom: 15px;">Акцентный цвет</span>
+                        <div class="color-picker">
+                            <div class="color-circle active" style="background: #5288c1;" onclick="setAccent('#5288c1', this)"></div>
+                            <div class="color-circle" style="background: #9b59b6;" onclick="setAccent('#9b59b6', this)"></div>
+                            <div class="color-circle" style="background: #e91e63;" onclick="setAccent('#e91e63', this)"></div>
+                            <div class="color-circle" style="background: #ff9800;" onclick="setAccent('#ff9800', this)"></div>
+                            <div class="color-circle" style="background: #4caf50;" onclick="setAccent('#4caf50', this)"></div>
                         </div>
-                        <span class="settings-value" id="my-email">...</span>
                     </div>
                 </div>
 
+                <div class="section-title">Звуки и вибрация</div>
                 <div class="settings-group">
                     <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon" style="color: var(--text-muted);"><i class="fas fa-palette"></i></div>
-                            <span class="settings-label">Оформление</span>
-                        </div>
-                        <span class="settings-value">Тёмная</span>
+                        <span class="settings-label">Звуки сообщений</span>
+                        <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
                     </div>
                     <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon" style="color: var(--text-muted);"><i class="fas fa-bell"></i></div>
-                            <span class="settings-label">Уведомления</span>
-                        </div>
-                        <span class="settings-value">Вкл</span>
+                        <span class="settings-label">Вибрация</span>
+                        <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
                     </div>
                 </div>
 
                 <div class="settings-group">
                     <div class="settings-item" style="cursor: pointer;" id="logout-btn">
+                        <span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА ПРОФИЛЬ -->
+            <div id="tab-profile" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar-initials">U</div>
+                    <div class="profile-name">
+                        <span id="profile-name-text">Пользователь</span>
+                        <i class="fas fa-check-circle verified-badge"></i>
+                    </div>
+                    <div class="profile-status" id="profile-status-text">в сети</div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-item">
                         <div class="settings-left">
-                            <div class="settings-icon" style="color: var(--danger-color); background: rgba(229, 57, 53, 0.1);"><i class="fas fa-sign-out-alt"></i></div>
-                            <span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span>
+                            <div class="settings-icon"><i class="fas fa-phone"></i></div>
+                            <span class="settings-label" id="profile-phone">+888-888-8888</span>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-left">
+                            <div class="settings-icon"><i class="fas fa-at"></i></div>
+                            <span class="settings-label" id="profile-username">@username</span>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-left">
+                            <div class="settings-icon"><i class="fas fa-id-badge"></i></div>
+                            <span class="settings-label" id="profile-id">XZ-0000</span>
                         </div>
                     </div>
                 </div>
@@ -367,12 +236,43 @@
         </div>
 
         <!-- Кнопка плюса -->
-        <div class="fab" id="new-chat-btn"><i class="fas fa-pen"></i></div>
+        <div class="fab" id="new-chat-btn" style="display: block;"><i class="fas fa-pen"></i></div>
+
+        <!-- Меню создания (скрыто по умолчанию) -->
+        <div id="create-menu">
+            <div class="create-menu-content">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center;">Создать</div>
+                
+                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 10px;" onclick="alert('Поиск контактов в разработке')">
+                    <div class="settings-left">
+                        <div class="settings-icon" style="background: rgba(82, 136, 193, 0.2);"><i class="fas fa-user-plus"></i></div>
+                        <span class="settings-label">Новый чат</span>
+                    </div>
+                </div>
+
+                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 10px;" onclick="alert('Создание групп в разработке')">
+                    <div class="settings-left">
+                        <div class="settings-icon" style="background: rgba(76, 175, 80, 0.2); color: #4caf50;"><i class="fas fa-users"></i></div>
+                        <span class="settings-label">Создать группу</span>
+                    </div>
+                </div>
+
+                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 20px;" onclick="alert('Создание каналов в разработке')">
+                    <div class="settings-left">
+                        <div class="settings-icon" style="background: rgba(233, 30, 99, 0.2); color: #e91e63;"><i class="fas fa-bullhorn"></i></div>
+                        <span class="settings-label">Создать канал</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" style="width: 100%; padding: 15px; background: var(--surface-light); color: var(--text-main); border-radius: 12px;" onclick="document.getElementById('create-menu').style.display='none'">Отмена</button>
+            </div>
+        </div>
 
         <!-- НИЖНЕЕ МЕНЮ -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-chats"><i class="fas fa-comment-alt"></i>Чаты</div>
             <div class="nav-item" id="nav-settings"><i class="fas fa-cog"></i>Настройки</div>
+            <div class="nav-item" id="nav-profile"><i class="fas fa-user"></i>Профиль</div>
         </div>
     </div>
 
@@ -405,47 +305,104 @@
 
         const tabChats = document.getElementById('tab-chats');
         const tabSettings = document.getElementById('tab-settings');
+        const tabProfile = document.getElementById('tab-profile');
         const navChats = document.getElementById('nav-chats');
         const navSettings = document.getElementById('nav-settings');
-        
-        const myIdDisplay = document.getElementById('my-id');
-        const myEmailDisplay = document.getElementById('my-email');
+        const navProfile = document.getElementById('nav-profile');
+        const headerTitle = document.getElementById('header-title');
+        const fab = document.getElementById('new-chat-btn');
+
+        const myIdDisplay = document.getElementById('profile-id');
+        const myEmailDisplay = document.getElementById('profile-username');
+        const profileInitials = document.getElementById('profile-avatar-initials');
+        const profileName = document.getElementById('profile-name-text');
         const logoutBtn = document.getElementById('logout-btn');
 
-        navChats.addEventListener('click', () => {
-            navChats.classList.add('active');
-            navSettings.classList.remove('active');
-            tabChats.style.display = 'block';
-            tabSettings.style.display = 'none';
+        // Генератор 6 уникальных цифр
+        function generateUniqueId() {
+            let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            let result = "";
+            for (let i = 0; i < 6; i++) {
+                const randomIndex = Math.floor(Math.random() * digits.length);
+                result += digits[randomIndex];
+                digits.splice(randomIndex, 1);
+            }
+            return result;
+        }
+
+        // Переключение вкладок
+        function switchTab(activeNav, activeTab, title, showFab) {
+            [navChats, navSettings, navProfile].forEach(el => el.classList.remove('active'));
+            [tabChats, tabSettings, tabProfile].forEach(el => el.style.display = 'none');
+            activeNav.classList.add('active');
+            activeTab.style.display = 'block';
+            headerTitle.textContent = title;
+            fab.style.display = showFab ? 'block' : 'none';
+        }
+
+        navChats.addEventListener('click', () => switchTab(navChats, tabChats, 'Чаты', true));
+        navSettings.addEventListener('click', () => switchTab(navSettings, tabSettings, 'Настройки', false));
+        navProfile.addEventListener('click', () => switchTab(navProfile, tabProfile, 'Профиль', false));
+
+        // Тема и цвет
+        window.setTheme = function(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+                document.querySelectorAll('.theme-btn')[0].classList.remove('active');
+                document.querySelectorAll('.theme-btn')[1].classList.add('active');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.querySelectorAll('.theme-btn')[1].classList.remove('active');
+                document.querySelectorAll('.theme-btn')[0].classList.add('active');
+            }
+        }
+
+        window.setAccent = function(color, el) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Меню создания
+        const newChatBtn = document.getElementById('new-chat-btn');
+        const createMenu = document.getElementById('create-menu');
+        
+        newChatBtn.addEventListener('click', () => {
+            createMenu.style.display = 'flex';
+        });
+        
+        createMenu.addEventListener('click', (e) => {
+            if (e.target === createMenu) {
+                createMenu.style.display = 'none';
+            }
         });
 
-        navSettings.addEventListener('click', () => {
-            navSettings.classList.add('active');
-            navChats.classList.remove('active');
-            tabChats.style.display = 'none';
-            tabSettings.style.display = 'block';
-        });
-
+        // Firebase
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 authScreen.style.display = 'none';
                 mainScreen.style.display = 'flex';
-                myEmailDisplay.textContent = user.email;
                 
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
                 
+                let userData;
                 if (!userDoc.exists()) {
-                    const randomId = "XZ-" + Math.floor(1000 + Math.random() * 9000);
-                    await setDoc(userDocRef, {
+                    userData = {
                         email: user.email,
-                        myId: randomId,
+                        myId: generateUniqueId(),
                         createdAt: new Date()
-                    });
-                    myIdDisplay.textContent = randomId;
+                    };
+                    await setDoc(userDocRef, userData);
                 } else {
-                    myIdDisplay.textContent = userDoc.data().myId;
+                    userData = userDoc.data();
                 }
+
+                myIdDisplay.textContent = userData.myId;
+                const username = user.email.split('@')[0];
+                myEmailDisplay.textContent = "@" + username;
+                profileInitials.textContent = username.charAt(0).toUpperCase();
+                profileName.textContent = username;
 
             } else {
                 authScreen.style.display = 'flex';
@@ -466,18 +423,12 @@
             errorMessage.style.display = 'none';
             createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
                 .catch((error) => { 
-                    if (error.code === 'auth/weak-password') {
-                        errorMessage.textContent = "Пароль слишком короткий (минимум 6 символов)"; 
-                    } else {
-                        errorMessage.textContent = "Ошибка: " + error.message; 
-                    }
+                    errorMessage.textContent = error.code === 'auth/weak-password' ? "Пароль слишком короткий (минимум 6 символов)" : "Ошибка: " + error.message; 
                     errorMessage.style.display = 'block';
                 });
         });
 
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth);
-        });
+        logoutBtn.addEventListener('click', () => signOut(auth));
     </script>
 </body>
 </html>
