@@ -51,11 +51,17 @@
         .error { color: var(--danger-color); margin-top: 16px; font-size: 14px; background: rgba(229, 57, 53, 0.1); padding: 10px; border-radius: 8px; display: none; }
 
         /* --- ГЛАВНЫЙ ЭКРАН --- */
-        #main-screen { display: none; flex-direction: column; height: 100vh; }
+        #main-screen { display: none; flex-direction: column; height: 100vh; position: relative; }
         .header { background-color: var(--header-bg); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-light); position: sticky; top: 0; z-index: 10; }
-        .header-title { font-size: 22px; font-weight: 600; }
+        .header-title { font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .header-icons { display: flex; gap: 24px; color: var(--text-muted); font-size: 20px; }
         .content { flex: 1; overflow-y: auto; padding: 16px; padding-bottom: 90px; }
+
+        /* --- СУБ-ЭКРАНЫ (Настройки) --- */
+        .sub-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 100; flex-direction: column; }
+        .sub-header { background-color: var(--header-bg); padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--surface-light); }
+        .back-btn { font-size: 20px; color: var(--text-main); margin-right: 20px; cursor: pointer; }
+        .sub-content { flex: 1; overflow-y: auto; padding: 16px; }
 
         /* --- ОБЩИЕ ЭЛЕМЕНТЫ --- */
         .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--text-muted); text-align: center; gap: 12px; }
@@ -100,6 +106,17 @@
         /* Меню создания */
         #create-menu { display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; justify-content: flex-end; flex-direction: column; backdrop-filter: blur(2px); }
         .create-menu-content { background: var(--surface-color); border-radius: 20px 20px 0 0; padding: 20px; }
+
+        /* Чат */
+        #chat-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; flex-direction: column; }
+        .chat-header { background: var(--surface-color); padding: 16px; display: flex; align-items: center; border-bottom: 1px solid var(--surface-light); }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+        .message { max-width: 80%; padding: 10px 14px; border-radius: 12px; font-size: 15px; line-height: 1.4; }
+        .message.my { background: var(--primary-color); align-self: flex-end; border-bottom-right-radius: 2px; }
+        .message.their { background: var(--surface-color); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .chat-input-area { padding: 12px; background: var(--surface-color); display: flex; gap: 10px; border-top: 1px solid var(--surface-light); }
+        .chat-input-area input { flex: 1; padding: 12px; border-radius: 20px; background: var(--surface-light); border: none; color: white; }
+        .chat-input-area button { background: var(--primary-color); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -109,31 +126,15 @@
         <div class="auth-box">
             <div class="logo">zenn<span>X</span></div>
             <div class="subtitle">Добро пожаловать</div>
-            
-            <div class="input-group">
-                <span class="input-label">Имя пользователя (для входа)</span>
-                <input type="email" id="email" placeholder="example@mail.com">
-            </div>
-            <div class="input-group">
-                <span class="input-label">Пароль</span>
-                <input type="password" id="password" placeholder="Минимум 6 символов">
-            </div>
-            
+            <div class="input-group"><span class="input-label">Email</span><input type="email" id="email" placeholder="example@mail.com"></div>
+            <div class="input-group"><span class="input-label">Пароль</span><input type="password" id="password" placeholder="Минимум 6 символов"></div>
             <div id="reg-fields" style="display: none;">
-                <div class="input-group">
-                    <span class="input-label">Ваш никнейм (отображается в чатах)</span>
-                    <input type="text" id="reg-name" placeholder="Например: Денис">
-                </div>
-                <div class="input-group">
-                    <span class="input-label">Ваш юзернейм (без @, только латиница)</span>
-                    <input type="text" id="reg-username" placeholder="dengi">
-                </div>
+                <div class="input-group"><span class="input-label">Имя (видно в чатах)</span><input type="text" id="reg-name" placeholder="Денис"></div>
+                <div class="input-group"><span class="input-label">Юзернейм (без @)</span><input type="text" id="reg-username" placeholder="dengi"></div>
             </div>
-
             <button id="login-btn" class="btn btn-primary">Войти</button>
             <button id="toggle-auth-btn" class="btn btn-secondary">У меня нет аккаунта</button>
             <button id="register-btn" class="btn btn-primary" style="display: none; margin-top: 10px;">Зарегистрироваться</button>
-            
             <div id="error-message" class="error"></div>
         </div>
     </div>
@@ -142,10 +143,7 @@
     <div id="main-screen">
         <div class="header">
             <div class="header-title" id="header-title">Чаты</div>
-            <div class="header-icons">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-ellipsis-v"></i>
-            </div>
+            <div class="header-icons"><i class="fas fa-search"></i><i class="fas fa-ellipsis-v"></i></div>
         </div>
 
         <div class="content">
@@ -153,7 +151,7 @@
             <div id="tab-chats">
                 <div class="empty-state" id="empty-chats">
                     <i class="far fa-comments"></i>
-                    <div>Пока нет чатов. Нажмите <i class="fas fa-pen"></i> и найдите друга по юзернейму.</div>
+                    <div>Пока нет чатов. Нажмите <i class="fas fa-pen"></i> и найдите друга по @юзернейму.</div>
                 </div>
             </div>
 
@@ -163,64 +161,46 @@
                     <div class="settings-item" style="background: var(--surface-light);">
                         <div class="settings-left">
                             <div class="settings-icon" style="background: #5288c1; color: white;"><i class="fas fa-user-plus"></i></div>
-                            <div>
-                                <span class="settings-label">Пригласить друзей</span>
-                                <span class="settings-sub">Поделиться ссылкой</span>
-                            </div>
+                            <div><span class="settings-label">Пригласить друзей</span><span class="settings-sub">Поделиться ссылкой</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="section-title">Мои контакты</div>
-                <div id="contacts-list">
-                    <div class="empty-state" style="height: 30vh;"><i class="fas fa-address-book"></i>У вас пока нет контактов</div>
-                </div>
+                <div id="contacts-list"><div class="empty-state" style="height: 30vh;"><i class="fas fa-address-book"></i>У вас пока нет контактов</div></div>
             </div>
 
             <!-- ВКЛАДКА НАСТРОЙКИ -->
             <div id="tab-settings" style="display: none;">
                 <div class="settings-group">
-                    <div class="settings-item">
+                    <div class="settings-item" onclick="openSubScreen('account')">
                         <div class="settings-left">
                             <div class="settings-icon" style="background: #5288c1; color: white;"><i class="fas fa-user-circle"></i></div>
-                            <div>
-                                <span class="settings-label">Аккаунт</span>
-                                <span class="settings-sub">Номер, имя пользователя, «О себе»</span>
-                            </div>
+                            <div><span class="settings-label">Аккаунт</span><span class="settings-sub">Номер, имя пользователя, «О себе»</span></div>
                         </div>
                         <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
-                    <div class="settings-item">
+                    <div class="settings-item" onclick="openSubScreen('chat-settings')">
                         <div class="settings-left">
                             <div class="settings-icon" style="background: #ff9800; color: white;"><i class="fas fa-comment-dots"></i></div>
-                            <div>
-                                <span class="settings-label">Настройки чатов</span>
-                                <span class="settings-sub">Обои, ночной режим, анимации</span>
-                            </div>
+                            <div><span class="settings-label">Настройки чатов</span><span class="settings-sub">Обои, ночной режим, анимации</span></div>
                         </div>
                         <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
-                    <div class="settings-item">
+                    <div class="settings-item" onclick="openSubScreen('privacy')">
                         <div class="settings-left">
                             <div class="settings-icon" style="background: #4caf50; color: white;"><i class="fas fa-key"></i></div>
-                            <div>
-                                <span class="settings-label">Конфиденциальность</span>
-                                <span class="settings-sub">Время захода, устройства, ключи</span>
-                            </div>
+                            <div><span class="settings-label">Конфиденциальность</span><span class="settings-sub">Время захода, устройства, ключи</span></div>
                         </div>
                         <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
-                    <div class="settings-item">
+                    <div class="settings-item" onclick="openSubScreen('notifications')">
                         <div class="settings-left">
                             <div class="settings-icon" style="background: #e91e63; color: white;"><i class="fas fa-bell"></i></div>
-                            <div>
-                                <span class="settings-label">Уведомления</span>
-                                <span class="settings-sub">Звуки, звонки, счётчик</span>
-                            </div>
+                            <div><span class="settings-label">Уведомления</span><span class="settings-sub">Звуки, звонки, счётчик</span></div>
                         </div>
                         <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
                 </div>
-
                 <div class="settings-group">
                     <div class="settings-item">
                         <div class="settings-left">
@@ -230,11 +210,8 @@
                         <label class="toggle"><input type="checkbox" id="theme-toggle" checked><span class="slider"></span></label>
                     </div>
                 </div>
-                
                 <div class="settings-group">
-                    <div class="settings-item" style="cursor: pointer;" id="logout-btn">
-                        <span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span>
-                    </div>
+                    <div class="settings-item" style="cursor: pointer;" id="logout-btn"><span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span></div>
                 </div>
             </div>
 
@@ -246,40 +223,24 @@
                         <img id="profile-avatar-img" src="" style="display: none;">
                     </div>
                     <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
-                    
-                    <div class="profile-name">
-                        <span id="profile-name-text">Пользователь</span>
-                        <i class="fas fa-check-circle verified-badge"></i>
-                    </div>
+                    <div class="profile-name"><span id="profile-name-text">Пользователь</span><i class="fas fa-check-circle verified-badge"></i></div>
                     <div class="profile-status" id="profile-status-text">в сети</div>
                 </div>
                 <div class="settings-group">
-                    <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-at"></i></div>
-                            <span class="settings-label" id="profile-username">@username</span>
-                        </div>
-                    </div>
-                    <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-id-badge"></i></div>
-                            <span class="settings-label" id="profile-id">123456</span>
-                        </div>
-                    </div>
+                    <div class="settings-item"><div class="settings-left"><div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-at"></i></div><span class="settings-label" id="profile-username">@username</span></div></div>
+                    <div class="settings-item"><div class="settings-left"><div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-id-badge"></i></div><span class="settings-label" id="profile-id">123456</span></div></div>
                 </div>
             </div>
         </div>
 
-        <!-- Кнопка плюса -->
+        <!-- КНОПКА ПЛЮСА -->
         <div class="fab" id="new-chat-btn" style="display: block;"><i class="fas fa-pen"></i></div>
 
-        <!-- Меню создания -->
+        <!-- МЕНЮ СОЗДАНИЯ -->
         <div id="create-menu">
             <div class="create-menu-content">
                 <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center;">Новый чат</div>
-                <div class="input-group">
-                    <input type="text" id="search-username-input" placeholder="Введите @юзернейм" style="text-align: center; font-size: 18px;">
-                </div>
+                <div class="input-group"><input type="text" id="search-username-input" placeholder="Введите @юзернейм" style="text-align: center; font-size: 18px;"></div>
                 <button id="search-btn" class="btn btn-primary" style="margin-bottom: 15px;">Найти</button>
                 <div id="search-result" style="margin-bottom: 15px; display: none;"></div>
                 <button class="btn btn-secondary" style="width: 100%; padding: 15px; background: var(--surface-light); color: var(--text-main); border-radius: 12px;" onclick="document.getElementById('create-menu').style.display='none'">Отмена</button>
@@ -295,10 +256,34 @@
         </div>
     </div>
 
+    <!-- ЭКРАН ЧАТА -->
+    <div id="chat-screen">
+        <div class="chat-header">
+            <i class="fas fa-arrow-left back-btn" onclick="document.getElementById('chat-screen').style.display='none'"></i>
+            <div style="font-weight: 600; font-size: 18px;" id="chat-with-name">Имя</div>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="message-input" placeholder="Сообщение...">
+            <button id="send-msg-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- СУБ-ЭКРАНЫ НАСТРОЕК -->
+    <div id="sub-screen" class="sub-screen">
+        <div class="sub-header">
+            <i class="fas fa-arrow-left back-btn" onclick="document.getElementById('sub-screen').style.display='none'"></i>
+            <div style="font-weight: 600; font-size: 18px;" id="sub-screen-title">Заголовок</div>
+        </div>
+        <div class="sub-content" id="sub-screen-content">
+            <!-- Содержимое будет меняться -->
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, addDoc, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -315,239 +300,162 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Элементы
-        const authScreen = document.getElementById('auth-screen');
-        const mainScreen = document.getElementById('main-screen');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const regName = document.getElementById('reg-name');
-        const regUsername = document.getElementById('reg-username');
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const toggleAuthBtn = document.getElementById('toggle-auth-btn');
-        const regFields = document.getElementById('reg-fields');
-        const errorMessage = document.getElementById('error-message');
+        let currentUserData = null;
+        let currentChatId = null;
 
-        const tabChats = document.getElementById('tab-chats');
-        const tabContacts = document.getElementById('tab-contacts');
-        const tabSettings = document.getElementById('tab-settings');
-        const tabProfile = document.getElementById('tab-profile');
-        const navChats = document.getElementById('nav-chats');
-        const navContacts = document.getElementById('nav-contacts');
-        const navSettings = document.getElementById('nav-settings');
-        const navProfile = document.getElementById('nav-profile');
-        const headerTitle = document.getElementById('header-title');
-        const fab = document.getElementById('new-chat-btn');
-
-        const myIdDisplay = document.getElementById('profile-id');
-        const myUsernameDisplay = document.getElementById('profile-username');
-        const profileInitials = document.getElementById('profile-avatar-initials');
-        const profileAvatarImg = document.getElementById('profile-avatar-img');
-        const profileName = document.getElementById('profile-name-text');
-        const logoutBtn = document.getElementById('logout-btn');
-        const themeToggle = document.getElementById('theme-toggle');
-
-        // Генератор 6 цифр
-        function generateUniqueId() {
-            let digits = [0,1,2,3,4,5,6,7,8,9];
-            let result = "";
-            for (let i = 0; i < 6; i++) {
-                const idx = Math.floor(Math.random() * digits.length);
-                result += digits[idx];
-                digits.splice(idx, 1);
-            }
-            return result;
+        // --- НАВИГАЦИЯ ---
+        function switchTab(tabId, title, showFab) {
+            ['chats', 'contacts', 'settings', 'profile'].forEach(t => {
+                document.getElementById(`tab-${t}`).style.display = 'none';
+                document.getElementById(`nav-${t}`).classList.remove('active');
+            });
+            document.getElementById(`tab-${tabId}`).style.display = 'block';
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+            document.getElementById('header-title').textContent = title;
+            document.getElementById('new-chat-btn').style.display = showFab ? 'block' : 'none';
         }
 
-        // Переключение режимов вход/регистрация
-        let isRegisterMode = false;
-        toggleAuthBtn.addEventListener('click', () => {
-            isRegisterMode = !isRegisterMode;
-            if (isRegisterMode) {
-                regFields.style.display = 'block';
-                loginBtn.style.display = 'none';
-                registerBtn.style.display = 'block';
-                toggleAuthBtn.textContent = 'У меня уже есть аккаунт';
-            } else {
-                regFields.style.display = 'none';
-                loginBtn.style.display = 'block';
-                registerBtn.style.display = 'none';
-                toggleAuthBtn.textContent = 'У меня нет аккаунта';
-            }
-        });
+        document.getElementById('nav-chats').onclick = () => switchTab('chats', 'Чаты', true);
+        document.getElementById('nav-contacts').onclick = () => switchTab('contacts', 'Контакты', true);
+        document.getElementById('nav-settings').onclick = () => switchTab('settings', 'Настройки', false);
+        document.getElementById('nav-profile').onclick = () => switchTab('profile', 'Профиль', false);
 
-        // Навигация
-        function switchTab(activeNav, activeTab, title, showFab) {
-            [navChats, navContacts, navSettings, navProfile].forEach(el => el.classList.remove('active'));
-            [tabChats, tabContacts, tabSettings, tabProfile].forEach(el => el.style.display = 'none');
-            activeNav.classList.add('active');
-            activeTab.style.display = 'block';
-            headerTitle.textContent = title;
-            fab.style.display = showFab ? 'block' : 'none';
+        // --- СУБ-ЭКРАНЫ ---
+        window.openSubScreen = function(type) {
+            const screen = document.getElementById('sub-screen');
+            const title = document.getElementById('sub-screen-title');
+            const content = document.getElementById('sub-screen-content');
+            screen.style.display = 'flex';
+
+            if (type === 'account') {
+                title.textContent = 'Аккаунт';
+                content.innerHTML = `
+                    <div class="input-group"><span class="input-label">Ваше имя</span><input type="text" id="edit-name" value="${currentUserData.name}"></div>
+                    <div class="input-group"><span class="input-label">Юзернейм (без @)</span><input type="text" id="edit-username" value="${currentUserData.username}"></div>
+                    <button class="btn btn-primary" id="save-account-btn">Сохранить изменения</button>
+                `;
+                document.getElementById('save-account-btn').onclick = async () => {
+                    const newName = document.getElementById('edit-name').value.trim();
+                    const newUsername = document.getElementById('edit-username').value.trim().toLowerCase();
+                    if (!newName || !newUsername) return alert('Заполните поля');
+                    
+                    await updateDoc(doc(db, "users", auth.currentUser.uid), {
+                        name: newName,
+                        username: newUsername
+                    });
+                    currentUserData.name = newName;
+                    currentUserData.username = newUsername;
+                    updateProfileUI();
+                    screen.style.display = 'none';
+                    alert('Сохранено');
+                };
+            } else if (type === 'chat-settings') {
+                title.textContent = 'Настройки чатов';
+                content.innerHTML = `
+                    <div class="settings-group">
+                        <div class="settings-item"><span class="settings-label">Размер текста сообщений</span><span>16</span></div>
+                        <div class="settings-item"><span class="settings-label">Скругление углов</span><span>12</span></div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-item"><span class="settings-label">Анимации</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    </div>
+                `;
+            } else if (type === 'privacy') {
+                title.textContent = 'Конфиденциальность';
+                content.innerHTML = `
+                    <div class="settings-group">
+                        <div class="settings-item"><div><span class="settings-label">Показывать, что я в сети</span></div><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="settings-item"><div><span class="settings-label">Показывать «печатает...»</span></div><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    </div>
+                `;
+            } else if (type === 'notifications') {
+                title.textContent = 'Уведомления';
+                content.innerHTML = `
+                    <div class="settings-group">
+                        <div class="settings-item"><span class="settings-label">Звуки сообщений</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+                        <div class="settings-item"><span class="settings-label">Вибрация</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    </div>
+                `;
+            }
+        };
+
+        // --- ПРОФИЛЬ ---
+        function updateProfileUI() {
+            if (!currentUserData) return;
+            document.getElementById('profile-name-text').textContent = currentUserData.name;
+            document.getElementById('profile-username').textContent = '@' + currentUserData.username;
+            document.getElementById('profile-id').textContent = currentUserData.myId;
+            document.getElementById('profile-avatar-initials').textContent = currentUserData.name.charAt(0).toUpperCase();
+            
+            if (currentUserData.avatar) {
+                const img = document.getElementById('profile-avatar-img');
+                img.src = currentUserData.avatar;
+                img.style.display = 'block';
+                document.getElementById('profile-avatar-initials').style.display = 'none';
+            }
         }
 
-        navChats.addEventListener('click', () => switchTab(navChats, tabChats, 'Чаты', true));
-        navContacts.addEventListener('click', () => switchTab(navContacts, tabContacts, 'Контакты', true));
-        navSettings.addEventListener('click', () => switchTab(navSettings, tabSettings, 'Настройки', false));
-        navProfile.addEventListener('click', () => switchTab(navProfile, tabProfile, 'Профиль', false));
+        // --- ТЕМА ---
+        document.getElementById('theme-toggle').onchange = (e) => {
+            document.body.classList.toggle('light-theme', !e.target.checked);
+        };
 
-        // Тема
-        themeToggle.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                document.body.classList.remove('light-theme');
-            } else {
-                document.body.classList.add('light-theme');
-            }
-        });
+        // --- ПОИСК И СОЗДАНИЕ ЧАТА ---
+        document.getElementById('new-chat-btn').onclick = () => document.getElementById('create-menu').style.display = 'flex';
+        document.getElementById('create-menu').onclick = (e) => { if (e.target === e.currentTarget) e.currentTarget.style.display = 'none'; };
 
-        // Меню поиска
-        const newChatBtn = document.getElementById('new-chat-btn');
-        const createMenu = document.getElementById('create-menu');
-        const searchBtn = document.getElementById('search-btn');
-        const searchUsernameInput = document.getElementById('search-username-input');
-        const searchResultDiv = document.getElementById('search-result');
+        document.getElementById('search-btn').onclick = async () => {
+            let username = document.getElementById('search-username-input').value.trim();
+            if (username.startsWith('@')) username = username.substring(1);
+            if (!username) return;
 
-        newChatBtn.addEventListener('click', () => createMenu.style.display = 'flex');
-        createMenu.addEventListener('click', (e) => { if (e.target === createMenu) createMenu.style.display = 'none'; });
+            const resDiv = document.getElementById('search-result');
+            resDiv.innerHTML = 'Поиск...';
+            resDiv.style.display = 'block';
 
-        // Поиск по юзернейму
-        searchBtn.addEventListener('click', async () => {
-            let searchUsername = searchUsernameInput.value.trim();
-            if (searchUsername.startsWith('@')) searchUsername = searchUsername.substring(1);
-            if (!searchUsername) { alert('Введите юзернейм'); return; }
+            const q = query(collection(db, "users"), where("username", "==", username.toLowerCase()));
+            const snap = await getDocs(q);
 
-            searchResultDiv.innerHTML = 'Поиск...';
-            searchResultDiv.style.display = 'block';
-
-            const usersRef = collection(db, "users");
-            const q = query(usersRef, where("username", "==", searchUsername.toLowerCase()));
-            const querySnapshot = await getDocs(q);
-
-            if (!querySnapshot.empty) {
-                querySnapshot.forEach((docSnap) => {
-                    const userData = docSnap.data();
-                    searchResultDiv.innerHTML = `
-                        <div class="chat-item" style="justify-content: center; flex-direction: column; text-align: center; background: var(--surface-light);">
-                            <div class="chat-avatar" style="margin: 0 auto 10px;">${userData.name.charAt(0).toUpperCase()}</div>
-                            <div class="chat-name">${userData.name}</div>
-                            <div class="chat-last-msg">@${userData.username}</div>
-                            <button class="btn btn-primary" style="margin-top: 10px; width: auto; padding: 8px 20px;" onclick="alert('Функция создания чата в разработке!')">Написать</button>
+            if (!snap.empty) {
+                snap.forEach(docSnap => {
+                    const u = docSnap.data();
+                    resDiv.innerHTML = `
+                        <div class="chat-item" style="justify-content: center; flex-direction: column; text-align: center; background: var(--surface-light); padding: 15px; border-radius: 12px;">
+                            <div class="chat-avatar" style="margin: 0 auto 10px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">${u.name.charAt(0).toUpperCase()}</div>
+                            <div class="chat-name" style="font-weight: bold;">${u.name}</div>
+                            <div class="chat-last-msg" style="color: var(--text-muted); margin-bottom: 10px;">@${u.username}</div>
+                            <button class="btn btn-primary" id="start-chat-btn" style="width: auto; padding: 8px 20px;">Написать</button>
                         </div>
                     `;
+                    document.getElementById('start-chat-btn').onclick = () => createChat(docSnap.id, u);
                 });
             } else {
-                searchResultDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; margin-top: 10px;">Пользователь с таким @юзернеймом не найден</div>';
+                resDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center;">Не найдено</div>';
             }
-        });
+        };
 
-        // Загрузка аватарки
-        const avatarUpload = document.getElementById('avatar-upload');
-        avatarUpload.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const user = auth.currentUser;
-            if (!user) return;
-
-            try {
-                const storageRef = ref(storage, 'avatars/' + user.uid);
-                await uploadBytes(storageRef, file);
-                const downloadURL = await getDownloadURL(storageRef);
-                
-                // Сохраняем в базу
-                await updateDoc(doc(db, "users", user.uid), { avatar: downloadURL });
-                
-                // Показываем
-                profileAvatarImg.src = downloadURL;
-                profileAvatarImg.style.display = 'block';
-                profileInitials.style.display = 'none';
-            } catch (error) {
-                alert('Ошибка загрузки: ' + error.message);
-            }
-        });
-
-        // Firebase Auth
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                authScreen.style.display = 'none';
-                mainScreen.style.display = 'flex';
-                
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-                
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    myIdDisplay.textContent = data.myId;
-                    myUsernameDisplay.textContent = "@" + data.username;
-                    profileName.textContent = data.name;
-                    profileInitials.textContent = data.name.charAt(0).toUpperCase();
-                    
-                    if (data.avatar) {
-                        profileAvatarImg.src = data.avatar;
-                        profileAvatarImg.style.display = 'block';
-                        profileInitials.style.display = 'none';
-                    }
-                }
-            } else {
-                authScreen.style.display = 'flex';
-                mainScreen.style.display = 'none';
-            }
-        });
-
-        // Вход
-        loginBtn.addEventListener('click', () => {
-            errorMessage.style.display = 'none';
-            signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-                .catch((error) => { 
-                    errorMessage.textContent = "Ошибка: неверный логин или пароль"; 
-                    errorMessage.style.display = 'block';
-                });
-        });
-
-        // Регистрация
-        registerBtn.addEventListener('click', async () => {
-            errorMessage.style.display = 'none';
-            const name = regName.value.trim();
-            const username = regUsername.value.trim().toLowerCase();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            if (!name || !username) {
-                errorMessage.textContent = "Заполните имя и юзернейм";
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            try {
-                // Проверка, занят ли юзернейм
-                const usersRef = collection(db, "users");
-                const q = query(usersRef, where("username", "==", username));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    throw new Error("Этот юзернейм уже занят");
-                }
-
-                // Создаем аккаунт
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // Сохраняем в базу
-                await setDoc(doc(db, "users", user.uid), {
-                    name: name,
-                    username: username,
-                    email: email,
-                    myId: generateUniqueId(),
-                    avatar: null,
+        async function createChat(targetUid, targetData) {
+            const myUid = auth.currentUser.uid;
+            const chatId = myUid < targetUid ? `${myUid}_${targetUid}` : `${targetUid}_${myUid}`;
+            
+            const chatDoc = await getDoc(doc(db, "chats", chatId));
+            if (!chatDoc.exists()) {
+                await setDoc(doc(db, "chats", chatId), {
+                    participants: [myUid, targetUid],
                     createdAt: new Date()
                 });
-
-            } catch (error) {
-                errorMessage.textContent = error.message;
-                errorMessage.style.display = 'block';
             }
-        });
+            
+            document.getElementById('create-menu').style.display = 'none';
+            openChat(chatId, targetData.name);
+        }
 
-        logoutBtn.addEventListener('click', () => signOut(auth));
-    </script>
-</body>
-</html>
+        // --- ОКНО ЧАТА ---
+        function openChat(chatId, name) {
+            currentChatId = chatId;
+            document.getElementById('chat-with-name').textContent = name;
+            document.getElementById('chat-screen').style.display = 'flex';
+            loadMessages();
+        }
+
+        function loadMessages() {
