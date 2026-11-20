@@ -17,6 +17,7 @@
             --text-muted: #7f91a4;
             --danger-color: #e53935;
             --header-bg: #17212b;
+            --success-color: #4cd964;
         }
 
         body.light-theme {
@@ -37,9 +38,10 @@
         .auth-box { width: 100%; max-width: 380px; text-align: center; }
         .logo { font-size: 36px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
         .logo span { color: var(--primary-color); }
-        .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 40px; }
-        .input-group { margin-bottom: 16px; }
-        input { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid var(--surface-light); background-color: var(--surface-color); color: var(--text-main); font-size: 16px; outline: none; transition: border-color 0.2s; }
+        .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 12px; text-align: left; }
+        .input-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; margin-left: 8px; display: block; }
+        input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--surface-light); background-color: var(--surface-color); color: var(--text-main); font-size: 16px; outline: none; transition: border-color 0.2s; }
         input:focus { border-color: var(--primary-color); }
         input::placeholder { color: var(--text-muted); }
         .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
@@ -55,44 +57,37 @@
         .header-icons { display: flex; gap: 24px; color: var(--text-muted); font-size: 20px; }
         .content { flex: 1; overflow-y: auto; padding: 16px; padding-bottom: 90px; }
 
-        /* --- ЧАТЫ --- */
+        /* --- ОБЩИЕ ЭЛЕМЕНТЫ --- */
         .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--text-muted); text-align: center; gap: 12px; }
         .empty-state i { font-size: 48px; opacity: 0.5; }
-
-        /* --- НАСТРОЙКИ И ПРОФИЛЬ --- */
         .section-title { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 10px 10px; letter-spacing: 0.5px; font-weight: 600; }
         .settings-group { background-color: var(--surface-color); border-radius: 14px; overflow: hidden; margin-bottom: 10px; }
-        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--bg-color); }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--bg-color); cursor: pointer; transition: background 0.2s; }
+        .settings-item:active { background: var(--surface-light); }
         .settings-item:last-child { border-bottom: none; }
         .settings-left { display: flex; align-items: center; gap: 16px; }
-        .settings-icon { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-light); display: flex; justify-content: center; align-items: center; color: var(--primary-color); font-size: 16px; }
+        .settings-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px; }
         .settings-label { font-size: 16px; }
+        .settings-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; display: block; }
         
         /* Тумблер */
         .toggle { position: relative; width: 50px; height: 28px; }
         .toggle input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--surface-light); transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #4cd964; }
+        input:checked + .slider { background-color: var(--success-color); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* Тема и цвет */
-        .theme-selector { display: flex; gap: 8px; }
-        .theme-btn { padding: 8px 12px; border-radius: 8px; background: var(--surface-light); border: none; color: var(--text-main); font-size: 14px; cursor: pointer; }
-        .theme-btn.active { background: var(--primary-color); color: white; }
-        .color-picker { display: flex; gap: 12px; padding: 16px; }
-        .color-circle { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-circle.active { border-color: white; transform: scale(1.1); }
-
         /* Профиль */
-        .profile-header { display: flex; flex-direction: column; align-items: center; padding: 20px 0 30px 0; }
-        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), #3a6ea5); display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: 600; color: #fff; margin-bottom: 16px; }
+        .profile-header { display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
+        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), #3a6ea5); display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: 600; color: #fff; margin-bottom: 16px; position: relative; cursor: pointer; overflow: hidden; }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
         .verified-badge { color: #3897f0; font-size: 18px; }
         .profile-status { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
 
         /* Нижнее меню */
-        .bottom-nav { background-color: var(--header-bg); display: flex; padding: 10px 0; border-top: 1px solid var(--surface-light); position: fixed; bottom: 0; width: 100%; }
+        .bottom-nav { background-color: var(--header-bg); display: flex; padding: 10px 0; border-top: 1px solid var(--surface-light); position: fixed; bottom: 0; width: 100%; z-index: 50; }
         .nav-item { flex: 1; text-align: center; color: var(--text-muted); font-size: 12px; cursor: pointer; transition: all 0.2s; }
         .nav-item i { font-size: 22px; margin-bottom: 6px; display: block; transition: transform 0.2s; }
         .nav-item.active { color: var(--primary-color); }
@@ -103,7 +98,7 @@
         .fab:active { transform: scale(0.9); }
 
         /* Меню создания */
-        #create-menu { display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: flex-end; flex-direction: column; }
+        #create-menu { display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; justify-content: flex-end; flex-direction: column; backdrop-filter: blur(2px); }
         .create-menu-content { background: var(--surface-color); border-radius: 20px 20px 0 0; padding: 20px; }
     </style>
 </head>
@@ -114,10 +109,31 @@
         <div class="auth-box">
             <div class="logo">zenn<span>X</span></div>
             <div class="subtitle">Добро пожаловать</div>
-            <div class="input-group"><input type="email" id="email" placeholder="Электронная почта"></div>
-            <div class="input-group"><input type="password" id="password" placeholder="Пароль"></div>
+            
+            <div class="input-group">
+                <span class="input-label">Имя пользователя (для входа)</span>
+                <input type="email" id="email" placeholder="example@mail.com">
+            </div>
+            <div class="input-group">
+                <span class="input-label">Пароль</span>
+                <input type="password" id="password" placeholder="Минимум 6 символов">
+            </div>
+            
+            <div id="reg-fields" style="display: none;">
+                <div class="input-group">
+                    <span class="input-label">Ваш никнейм (отображается в чатах)</span>
+                    <input type="text" id="reg-name" placeholder="Например: Денис">
+                </div>
+                <div class="input-group">
+                    <span class="input-label">Ваш юзернейм (без @, только латиница)</span>
+                    <input type="text" id="reg-username" placeholder="dengi">
+                </div>
+            </div>
+
             <button id="login-btn" class="btn btn-primary">Войти</button>
-            <button id="register-btn" class="btn btn-secondary">Создать аккаунт</button>
+            <button id="toggle-auth-btn" class="btn btn-secondary">У меня нет аккаунта</button>
+            <button id="register-btn" class="btn btn-primary" style="display: none; margin-top: 10px;">Зарегистрироваться</button>
+            
             <div id="error-message" class="error"></div>
         </div>
     </div>
@@ -137,45 +153,84 @@
             <div id="tab-chats">
                 <div class="empty-state" id="empty-chats">
                     <i class="far fa-comments"></i>
-                    <div>Пока нет чатов. Нажмите <i class="fas fa-pen"></i> и выберите собеседника.</div>
+                    <div>Пока нет чатов. Нажмите <i class="fas fa-pen"></i> и найдите друга по юзернейму.</div>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА КОНТАКТЫ -->
+            <div id="tab-contacts" style="display: none;">
+                <div class="settings-group">
+                    <div class="settings-item" style="background: var(--surface-light);">
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #5288c1; color: white;"><i class="fas fa-user-plus"></i></div>
+                            <div>
+                                <span class="settings-label">Пригласить друзей</span>
+                                <span class="settings-sub">Поделиться ссылкой</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-title">Мои контакты</div>
+                <div id="contacts-list">
+                    <div class="empty-state" style="height: 30vh;"><i class="fas fa-address-book"></i>У вас пока нет контактов</div>
                 </div>
             </div>
 
             <!-- ВКЛАДКА НАСТРОЙКИ -->
             <div id="tab-settings" style="display: none;">
-                <div class="section-title">Внешний вид</div>
                 <div class="settings-group">
                     <div class="settings-item">
-                        <span class="settings-label">Тема</span>
-                        <div class="theme-selector">
-                            <button class="theme-btn active" onclick="setTheme('dark')">Тёмная</button>
-                            <button class="theme-btn" onclick="setTheme('light')">Светлая</button>
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #5288c1; color: white;"><i class="fas fa-user-circle"></i></div>
+                            <div>
+                                <span class="settings-label">Аккаунт</span>
+                                <span class="settings-sub">Номер, имя пользователя, «О себе»</span>
+                            </div>
                         </div>
+                        <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
-                </div>
-                <div class="settings-group">
-                    <div class="settings-item" style="flex-direction: column; align-items: flex-start;">
-                        <span class="settings-label" style="margin-bottom: 15px;">Акцентный цвет</span>
-                        <div class="color-picker">
-                            <div class="color-circle active" style="background: #5288c1;" onclick="setAccent('#5288c1', this)"></div>
-                            <div class="color-circle" style="background: #9b59b6;" onclick="setAccent('#9b59b6', this)"></div>
-                            <div class="color-circle" style="background: #e91e63;" onclick="setAccent('#e91e63', this)"></div>
-                            <div class="color-circle" style="background: #ff9800;" onclick="setAccent('#ff9800', this)"></div>
-                            <div class="color-circle" style="background: #4caf50;" onclick="setAccent('#4caf50', this)"></div>
+                    <div class="settings-item">
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #ff9800; color: white;"><i class="fas fa-comment-dots"></i></div>
+                            <div>
+                                <span class="settings-label">Настройки чатов</span>
+                                <span class="settings-sub">Обои, ночной режим, анимации</span>
+                            </div>
                         </div>
+                        <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #4caf50; color: white;"><i class="fas fa-key"></i></div>
+                            <div>
+                                <span class="settings-label">Конфиденциальность</span>
+                                <span class="settings-sub">Время захода, устройства, ключи</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #e91e63; color: white;"><i class="fas fa-bell"></i></div>
+                            <div>
+                                <span class="settings-label">Уведомления</span>
+                                <span class="settings-sub">Звуки, звонки, счётчик</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
                     </div>
                 </div>
-                <div class="section-title">Звуки и вибрация</div>
+
                 <div class="settings-group">
                     <div class="settings-item">
-                        <span class="settings-label">Звуки сообщений</span>
-                        <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
-                    </div>
-                    <div class="settings-item">
-                        <span class="settings-label">Вибрация</span>
-                        <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
+                        <div class="settings-left">
+                            <div class="settings-icon" style="background: #9b59b6; color: white;"><i class="fas fa-palette"></i></div>
+                            <span class="settings-label">Тёмная тема</span>
+                        </div>
+                        <label class="toggle"><input type="checkbox" id="theme-toggle" checked><span class="slider"></span></label>
                     </div>
                 </div>
+                
                 <div class="settings-group">
                     <div class="settings-item" style="cursor: pointer;" id="logout-btn">
                         <span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span>
@@ -186,7 +241,12 @@
             <!-- ВКЛАДКА ПРОФИЛЬ -->
             <div id="tab-profile" style="display: none;">
                 <div class="profile-header">
-                    <div class="profile-avatar" id="profile-avatar-initials">U</div>
+                    <div class="profile-avatar" id="profile-avatar-container" onclick="document.getElementById('avatar-upload').click()">
+                        <span id="profile-avatar-initials">U</span>
+                        <img id="profile-avatar-img" src="" style="display: none;">
+                    </div>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                    
                     <div class="profile-name">
                         <span id="profile-name-text">Пользователь</span>
                         <i class="fas fa-check-circle verified-badge"></i>
@@ -196,20 +256,14 @@
                 <div class="settings-group">
                     <div class="settings-item">
                         <div class="settings-left">
-                            <div class="settings-icon"><i class="fas fa-phone"></i></div>
-                            <span class="settings-label" id="profile-phone">+888-888-8888</span>
-                        </div>
-                    </div>
-                    <div class="settings-item">
-                        <div class="settings-left">
-                            <div class="settings-icon"><i class="fas fa-at"></i></div>
+                            <div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-at"></i></div>
                             <span class="settings-label" id="profile-username">@username</span>
                         </div>
                     </div>
                     <div class="settings-item">
                         <div class="settings-left">
-                            <div class="settings-icon"><i class="fas fa-id-badge"></i></div>
-                            <span class="settings-label" id="profile-id">Загрузка...</span>
+                            <div class="settings-icon" style="background: var(--surface-light);"><i class="fas fa-id-badge"></i></div>
+                            <span class="settings-label" id="profile-id">123456</span>
                         </div>
                     </div>
                 </div>
@@ -224,7 +278,7 @@
             <div class="create-menu-content">
                 <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center;">Новый чат</div>
                 <div class="input-group">
-                    <input type="number" id="search-id-input" placeholder="Введите ID друга (6 цифр)" style="text-align: center; font-size: 20px; letter-spacing: 2px;">
+                    <input type="text" id="search-username-input" placeholder="Введите @юзернейм" style="text-align: center; font-size: 18px;">
                 </div>
                 <button id="search-btn" class="btn btn-primary" style="margin-bottom: 15px;">Найти</button>
                 <div id="search-result" style="margin-bottom: 15px; display: none;"></div>
@@ -235,6 +289,7 @@
         <!-- НИЖНЕЕ МЕНЮ -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav-chats"><i class="fas fa-comment-alt"></i>Чаты</div>
+            <div class="nav-item" id="nav-contacts"><i class="fas fa-user-friends"></i>Контакты</div>
             <div class="nav-item" id="nav-settings"><i class="fas fa-cog"></i>Настройки</div>
             <div class="nav-item" id="nav-profile"><i class="fas fa-user"></i>Профиль</div>
         </div>
@@ -243,7 +298,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6_zcgE-gfoqfC2xg2-YCik_JMX1AwATk",
@@ -257,44 +313,73 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
+        // Элементы
         const authScreen = document.getElementById('auth-screen');
         const mainScreen = document.getElementById('main-screen');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
+        const regName = document.getElementById('reg-name');
+        const regUsername = document.getElementById('reg-username');
         const loginBtn = document.getElementById('login-btn');
         const registerBtn = document.getElementById('register-btn');
+        const toggleAuthBtn = document.getElementById('toggle-auth-btn');
+        const regFields = document.getElementById('reg-fields');
         const errorMessage = document.getElementById('error-message');
 
         const tabChats = document.getElementById('tab-chats');
+        const tabContacts = document.getElementById('tab-contacts');
         const tabSettings = document.getElementById('tab-settings');
         const tabProfile = document.getElementById('tab-profile');
         const navChats = document.getElementById('nav-chats');
+        const navContacts = document.getElementById('nav-contacts');
         const navSettings = document.getElementById('nav-settings');
         const navProfile = document.getElementById('nav-profile');
         const headerTitle = document.getElementById('header-title');
         const fab = document.getElementById('new-chat-btn');
 
         const myIdDisplay = document.getElementById('profile-id');
-        const myEmailDisplay = document.getElementById('profile-username');
+        const myUsernameDisplay = document.getElementById('profile-username');
         const profileInitials = document.getElementById('profile-avatar-initials');
+        const profileAvatarImg = document.getElementById('profile-avatar-img');
         const profileName = document.getElementById('profile-name-text');
         const logoutBtn = document.getElementById('logout-btn');
+        const themeToggle = document.getElementById('theme-toggle');
 
+        // Генератор 6 цифр
         function generateUniqueId() {
-            let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            let digits = [0,1,2,3,4,5,6,7,8,9];
             let result = "";
             for (let i = 0; i < 6; i++) {
-                const randomIndex = Math.floor(Math.random() * digits.length);
-                result += digits[randomIndex];
-                digits.splice(randomIndex, 1);
+                const idx = Math.floor(Math.random() * digits.length);
+                result += digits[idx];
+                digits.splice(idx, 1);
             }
             return result;
         }
 
+        // Переключение режимов вход/регистрация
+        let isRegisterMode = false;
+        toggleAuthBtn.addEventListener('click', () => {
+            isRegisterMode = !isRegisterMode;
+            if (isRegisterMode) {
+                regFields.style.display = 'block';
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'block';
+                toggleAuthBtn.textContent = 'У меня уже есть аккаунт';
+            } else {
+                regFields.style.display = 'none';
+                loginBtn.style.display = 'block';
+                registerBtn.style.display = 'none';
+                toggleAuthBtn.textContent = 'У меня нет аккаунта';
+            }
+        });
+
+        // Навигация
         function switchTab(activeNav, activeTab, title, showFab) {
-            [navChats, navSettings, navProfile].forEach(el => el.classList.remove('active'));
-            [tabChats, tabSettings, tabProfile].forEach(el => el.style.display = 'none');
+            [navChats, navContacts, navSettings, navProfile].forEach(el => el.classList.remove('active'));
+            [tabChats, tabContacts, tabSettings, tabProfile].forEach(el => el.style.display = 'none');
             activeNav.classList.add('active');
             activeTab.style.display = 'block';
             headerTitle.textContent = title;
@@ -302,76 +387,86 @@
         }
 
         navChats.addEventListener('click', () => switchTab(navChats, tabChats, 'Чаты', true));
+        navContacts.addEventListener('click', () => switchTab(navContacts, tabContacts, 'Контакты', true));
         navSettings.addEventListener('click', () => switchTab(navSettings, tabSettings, 'Настройки', false));
         navProfile.addEventListener('click', () => switchTab(navProfile, tabProfile, 'Профиль', false));
 
-        window.setTheme = function(theme) {
-            if (theme === 'light') {
-                document.body.classList.add('light-theme');
-                document.querySelectorAll('.theme-btn')[0].classList.remove('active');
-                document.querySelectorAll('.theme-btn')[1].classList.add('active');
-            } else {
+        // Тема
+        themeToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
                 document.body.classList.remove('light-theme');
-                document.querySelectorAll('.theme-btn')[1].classList.remove('active');
-                document.querySelectorAll('.theme-btn')[0].classList.add('active');
+            } else {
+                document.body.classList.add('light-theme');
             }
-        }
+        });
 
-        window.setAccent = function(color, el) {
-            document.documentElement.style.setProperty('--primary-color', color);
-            document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-        }
-
+        // Меню поиска
         const newChatBtn = document.getElementById('new-chat-btn');
         const createMenu = document.getElementById('create-menu');
-        
-        newChatBtn.addEventListener('click', () => {
-            createMenu.style.display = 'flex';
-        });
-        
-        createMenu.addEventListener('click', (e) => {
-            if (e.target === createMenu) {
-                createMenu.style.display = 'none';
-            }
-        });
-
-        // Логика поиска
         const searchBtn = document.getElementById('search-btn');
-        const searchIdInput = document.getElementById('search-id-input');
+        const searchUsernameInput = document.getElementById('search-username-input');
         const searchResultDiv = document.getElementById('search-result');
 
+        newChatBtn.addEventListener('click', () => createMenu.style.display = 'flex');
+        createMenu.addEventListener('click', (e) => { if (e.target === createMenu) createMenu.style.display = 'none'; });
+
+        // Поиск по юзернейму
         searchBtn.addEventListener('click', async () => {
-            const searchId = searchIdInput.value.trim();
-            if (searchId.length !== 6) {
-                alert('ID должен состоять из 6 цифр');
-                return;
-            }
+            let searchUsername = searchUsernameInput.value.trim();
+            if (searchUsername.startsWith('@')) searchUsername = searchUsername.substring(1);
+            if (!searchUsername) { alert('Введите юзернейм'); return; }
 
             searchResultDiv.innerHTML = 'Поиск...';
             searchResultDiv.style.display = 'block';
 
             const usersRef = collection(db, "users");
-            const q = query(usersRef, where("myId", "==", searchId));
+            const q = query(usersRef, where("username", "==", searchUsername.toLowerCase()));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
-                querySnapshot.forEach((doc) => {
-                    const userData = doc.data();
+                querySnapshot.forEach((docSnap) => {
+                    const userData = docSnap.data();
                     searchResultDiv.innerHTML = `
                         <div class="chat-item" style="justify-content: center; flex-direction: column; text-align: center; background: var(--surface-light);">
-                            <div class="chat-avatar" style="margin: 0 auto 10px;">${userData.email.charAt(0).toUpperCase()}</div>
-                            <div class="chat-name">${userData.email.split('@')[0]}</div>
-                            <div class="chat-last-msg">ID: ${userData.myId}</div>
+                            <div class="chat-avatar" style="margin: 0 auto 10px;">${userData.name.charAt(0).toUpperCase()}</div>
+                            <div class="chat-name">${userData.name}</div>
+                            <div class="chat-last-msg">@${userData.username}</div>
                             <button class="btn btn-primary" style="margin-top: 10px; width: auto; padding: 8px 20px;" onclick="alert('Функция создания чата в разработке!')">Написать</button>
                         </div>
                     `;
                 });
             } else {
-                searchResultDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; margin-top: 10px;">Пользователь с таким ID не найден</div>';
+                searchResultDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; margin-top: 10px;">Пользователь с таким @юзернеймом не найден</div>';
             }
         });
 
+        // Загрузка аватарки
+        const avatarUpload = document.getElementById('avatar-upload');
+        avatarUpload.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                const storageRef = ref(storage, 'avatars/' + user.uid);
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+                
+                // Сохраняем в базу
+                await updateDoc(doc(db, "users", user.uid), { avatar: downloadURL });
+                
+                // Показываем
+                profileAvatarImg.src = downloadURL;
+                profileAvatarImg.style.display = 'block';
+                profileInitials.style.display = 'none';
+            } catch (error) {
+                alert('Ошибка загрузки: ' + error.message);
+            }
+        });
+
+        // Firebase Auth
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 authScreen.style.display = 'none';
@@ -380,46 +475,76 @@
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
                 
-                let userData;
-                if (!userDoc.exists()) {
-                    userData = {
-                        email: user.email,
-                        myId: generateUniqueId(),
-                        createdAt: new Date()
-                    };
-                    await setDoc(userDocRef, userData);
-                } else {
-                    userData = userDoc.data();
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    myIdDisplay.textContent = data.myId;
+                    myUsernameDisplay.textContent = "@" + data.username;
+                    profileName.textContent = data.name;
+                    profileInitials.textContent = data.name.charAt(0).toUpperCase();
+                    
+                    if (data.avatar) {
+                        profileAvatarImg.src = data.avatar;
+                        profileAvatarImg.style.display = 'block';
+                        profileInitials.style.display = 'none';
+                    }
                 }
-
-                myIdDisplay.textContent = userData.myId;
-                const username = user.email.split('@')[0];
-                myEmailDisplay.textContent = "@" + username;
-                profileInitials.textContent = username.charAt(0).toUpperCase();
-                profileName.textContent = username;
-
             } else {
                 authScreen.style.display = 'flex';
                 mainScreen.style.display = 'none';
             }
         });
 
+        // Вход
         loginBtn.addEventListener('click', () => {
             errorMessage.style.display = 'none';
             signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
                 .catch((error) => { 
-                    errorMessage.textContent = "Ошибка: проверьте логин и пароль"; 
+                    errorMessage.textContent = "Ошибка: неверный логин или пароль"; 
                     errorMessage.style.display = 'block';
                 });
         });
 
-        registerBtn.addEventListener('click', () => {
+        // Регистрация
+        registerBtn.addEventListener('click', async () => {
             errorMessage.style.display = 'none';
-            createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-                .catch((error) => { 
-                    errorMessage.textContent = error.code === 'auth/weak-password' ? "Пароль слишком короткий (минимум 6 символов)" : "Ошибка: " + error.message; 
-                    errorMessage.style.display = 'block';
+            const name = regName.value.trim();
+            const username = regUsername.value.trim().toLowerCase();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!name || !username) {
+                errorMessage.textContent = "Заполните имя и юзернейм";
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            try {
+                // Проверка, занят ли юзернейм
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("username", "==", username));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    throw new Error("Этот юзернейм уже занят");
+                }
+
+                // Создаем аккаунт
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Сохраняем в базу
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name,
+                    username: username,
+                    email: email,
+                    myId: generateUniqueId(),
+                    avatar: null,
+                    createdAt: new Date()
                 });
+
+            } catch (error) {
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+            }
         });
 
         logoutBtn.addEventListener('click', () => signOut(auth));
