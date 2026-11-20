@@ -30,17 +30,9 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            height: 100vh; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column;
-            transition: background-color 0.3s, color 0.3s;
-        }
+        body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; transition: background-color 0.3s, color 0.3s; }
 
-        /* --- ЭКРАН АВТОРИЗАЦИИ --- */
+        /* --- АВТОРИЗАЦИЯ --- */
         #auth-screen { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 24px; }
         .auth-box { width: 100%; max-width: 380px; text-align: center; }
         .logo { font-size: 36px; font-weight: 600; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
@@ -75,9 +67,8 @@
         .settings-left { display: flex; align-items: center; gap: 16px; }
         .settings-icon { width: 32px; height: 32px; border-radius: 8px; background-color: var(--surface-light); display: flex; justify-content: center; align-items: center; color: var(--primary-color); font-size: 16px; }
         .settings-label { font-size: 16px; }
-        .settings-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; }
         
-        /* Переключатель */
+        /* Тумблер */
         .toggle { position: relative; width: 50px; height: 28px; }
         .toggle input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--surface-light); transition: .4s; border-radius: 34px; }
@@ -107,7 +98,7 @@
         .nav-item.active { color: var(--primary-color); }
         .nav-item.active i { transform: translateY(-2px); }
 
-        /* Кнопка действия */
+        /* Кнопка плюса */
         .fab { position: fixed; bottom: 85px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 22px; box-shadow: 0 4px 12px rgba(82, 136, 193, 0.4); cursor: pointer; transition: transform 0.2s; z-index: 20; }
         .fab:active { transform: scale(0.9); }
 
@@ -123,17 +114,10 @@
         <div class="auth-box">
             <div class="logo">zenn<span>X</span></div>
             <div class="subtitle">Добро пожаловать</div>
-            
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Электронная почта">
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Пароль">
-            </div>
-            
+            <div class="input-group"><input type="email" id="email" placeholder="Электронная почта"></div>
+            <div class="input-group"><input type="password" id="password" placeholder="Пароль"></div>
             <button id="login-btn" class="btn btn-primary">Войти</button>
             <button id="register-btn" class="btn btn-secondary">Создать аккаунт</button>
-            
             <div id="error-message" class="error"></div>
         </div>
     </div>
@@ -181,7 +165,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="section-title">Звуки и вибрация</div>
                 <div class="settings-group">
                     <div class="settings-item">
@@ -193,7 +176,6 @@
                         <label class="toggle"><input type="checkbox" checked><span class="slider"></span></label>
                     </div>
                 </div>
-
                 <div class="settings-group">
                     <div class="settings-item" style="cursor: pointer;" id="logout-btn">
                         <span class="settings-label" style="color: var(--danger-color);">Выйти из аккаунта</span>
@@ -211,7 +193,6 @@
                     </div>
                     <div class="profile-status" id="profile-status-text">в сети</div>
                 </div>
-
                 <div class="settings-group">
                     <div class="settings-item">
                         <div class="settings-left">
@@ -228,7 +209,7 @@
                     <div class="settings-item">
                         <div class="settings-left">
                             <div class="settings-icon"><i class="fas fa-id-badge"></i></div>
-                            <span class="settings-label" id="profile-id">XZ-0000</span>
+                            <span class="settings-label" id="profile-id">Загрузка...</span>
                         </div>
                     </div>
                 </div>
@@ -238,32 +219,15 @@
         <!-- Кнопка плюса -->
         <div class="fab" id="new-chat-btn" style="display: block;"><i class="fas fa-pen"></i></div>
 
-        <!-- Меню создания (скрыто по умолчанию) -->
+        <!-- Меню создания -->
         <div id="create-menu">
             <div class="create-menu-content">
-                <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center;">Создать</div>
-                
-                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 10px;" onclick="alert('Поиск контактов в разработке')">
-                    <div class="settings-left">
-                        <div class="settings-icon" style="background: rgba(82, 136, 193, 0.2);"><i class="fas fa-user-plus"></i></div>
-                        <span class="settings-label">Новый чат</span>
-                    </div>
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center;">Новый чат</div>
+                <div class="input-group">
+                    <input type="number" id="search-id-input" placeholder="Введите ID друга (6 цифр)" style="text-align: center; font-size: 20px; letter-spacing: 2px;">
                 </div>
-
-                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 10px;" onclick="alert('Создание групп в разработке')">
-                    <div class="settings-left">
-                        <div class="settings-icon" style="background: rgba(76, 175, 80, 0.2); color: #4caf50;"><i class="fas fa-users"></i></div>
-                        <span class="settings-label">Создать группу</span>
-                    </div>
-                </div>
-
-                <div class="settings-item" style="cursor: pointer; border-radius: 12px; background: var(--surface-light); margin-bottom: 20px;" onclick="alert('Создание каналов в разработке')">
-                    <div class="settings-left">
-                        <div class="settings-icon" style="background: rgba(233, 30, 99, 0.2); color: #e91e63;"><i class="fas fa-bullhorn"></i></div>
-                        <span class="settings-label">Создать канал</span>
-                    </div>
-                </div>
-
+                <button id="search-btn" class="btn btn-primary" style="margin-bottom: 15px;">Найти</button>
+                <div id="search-result" style="margin-bottom: 15px; display: none;"></div>
                 <button class="btn btn-secondary" style="width: 100%; padding: 15px; background: var(--surface-light); color: var(--text-main); border-radius: 12px;" onclick="document.getElementById('create-menu').style.display='none'">Отмена</button>
             </div>
         </div>
@@ -279,7 +243,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6_zcgE-gfoqfC2xg2-YCik_JMX1AwATk",
@@ -296,7 +260,6 @@
 
         const authScreen = document.getElementById('auth-screen');
         const mainScreen = document.getElementById('main-screen');
-        
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
@@ -318,7 +281,6 @@
         const profileName = document.getElementById('profile-name-text');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // Генератор 6 уникальных цифр
         function generateUniqueId() {
             let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             let result = "";
@@ -330,7 +292,6 @@
             return result;
         }
 
-        // Переключение вкладок
         function switchTab(activeNav, activeTab, title, showFab) {
             [navChats, navSettings, navProfile].forEach(el => el.classList.remove('active'));
             [tabChats, tabSettings, tabProfile].forEach(el => el.style.display = 'none');
@@ -344,7 +305,6 @@
         navSettings.addEventListener('click', () => switchTab(navSettings, tabSettings, 'Настройки', false));
         navProfile.addEventListener('click', () => switchTab(navProfile, tabProfile, 'Профиль', false));
 
-        // Тема и цвет
         window.setTheme = function(theme) {
             if (theme === 'light') {
                 document.body.classList.add('light-theme');
@@ -363,7 +323,6 @@
             el.classList.add('active');
         }
 
-        // Меню создания
         const newChatBtn = document.getElementById('new-chat-btn');
         const createMenu = document.getElementById('create-menu');
         
@@ -377,7 +336,42 @@
             }
         });
 
-        // Firebase
+        // Логика поиска
+        const searchBtn = document.getElementById('search-btn');
+        const searchIdInput = document.getElementById('search-id-input');
+        const searchResultDiv = document.getElementById('search-result');
+
+        searchBtn.addEventListener('click', async () => {
+            const searchId = searchIdInput.value.trim();
+            if (searchId.length !== 6) {
+                alert('ID должен состоять из 6 цифр');
+                return;
+            }
+
+            searchResultDiv.innerHTML = 'Поиск...';
+            searchResultDiv.style.display = 'block';
+
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, where("myId", "==", searchId));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    searchResultDiv.innerHTML = `
+                        <div class="chat-item" style="justify-content: center; flex-direction: column; text-align: center; background: var(--surface-light);">
+                            <div class="chat-avatar" style="margin: 0 auto 10px;">${userData.email.charAt(0).toUpperCase()}</div>
+                            <div class="chat-name">${userData.email.split('@')[0]}</div>
+                            <div class="chat-last-msg">ID: ${userData.myId}</div>
+                            <button class="btn btn-primary" style="margin-top: 10px; width: auto; padding: 8px 20px;" onclick="alert('Функция создания чата в разработке!')">Написать</button>
+                        </div>
+                    `;
+                });
+            } else {
+                searchResultDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; margin-top: 10px;">Пользователь с таким ID не найден</div>';
+            }
+        });
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 authScreen.style.display = 'none';
